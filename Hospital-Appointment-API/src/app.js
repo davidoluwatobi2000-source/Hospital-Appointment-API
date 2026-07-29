@@ -3,6 +3,7 @@ const app = express();
 const userRoutes = require("./routes/userRoutes");
 const doctorRoutes = require("./routes/doctorRoutes");
 const patientRoutes = require("./routes/patientRoutes");
+const appointmentRoutes = require("./routes/appointmentRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 
 // Middleware
@@ -16,6 +17,7 @@ app.get("/", (req, res) => {
 app.use("/api/users", userRoutes);
 app.use("/api/doctors", doctorRoutes);
 app.use("/api/patients", patientRoutes);
+app.use("/api/appointments", appointmentRoutes);
 
 // Error Handling Middleware
 app.use(notFound);
