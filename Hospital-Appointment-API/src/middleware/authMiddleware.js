@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
-const User = require("../models/User");
+
+const Doctor = require("../models/Doctor");
+const Patient = require("../models/Patient");
 
 const protect = asyncHandler(async (req, res, next) => {
   let token;
@@ -14,11 +16,22 @@ const protect = asyncHandler(async (req, res, next) => {
 
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-      req.user = await User.findById(decoded.id).select("-password");
+      let account = await Doctor.findById(decoded.id);
+
+      if (!account) {
+        account = await Patient.findById(decoded.id);
+      }
+
+      if (!account) {
+        res.status(401);
+        throw new Error("Not authorized");
+      }
+
+      req.user = account;
 
       next();
+
     } catch (error) {
-      console.error(error);
       res.status(401);
       throw new Error("Not authorized, token failed");
     }

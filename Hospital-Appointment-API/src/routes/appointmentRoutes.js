@@ -13,18 +13,18 @@ const {
 const { protect } = require("../middleware/authMiddleware");
 
 // Search appointments
-router.get("/search", protect, searchAppointments);
+router.get("/search", searchAppointments);
 
 // Get all appointments
-router.get("/", protect, getAppointments);
+router.get("/", getAppointments);
 
 // Get one appointment
-router.get("/:id", protect, getAppointmentById);
+router.get("/:id", getAppointmentById);
 
 // Book appointment
-router.post("/", protect, createAppointment);
+router.post("/", createAppointment);
 
 // Cancel appointment
-router.patch("/:id/cancel", protect, cancelAppointment);
+router.patch("/:id/cancel", cancelAppointment);
 
 module.exports = router;
